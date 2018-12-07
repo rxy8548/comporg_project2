@@ -1,5 +1,5 @@
 03 # 0 clear
-00 # 1
+5E # 1 jumpdisp immediate address16
 56 # 2 retusub address
 00 # 3
 26 # 4 jumpn address
@@ -14,7 +14,7 @@
 0A # 13 storeds
 09 # 14 storecs
 2D # 15 store address
-00 # 16
+5D # 16 adddisp immediate address16
 3A # 17 addndec address
 3A # 18 addninc address
 08 # 19 loadss
@@ -27,9 +27,9 @@
 02 # 26 addil immediate
 06 # 27 loadcs
 0D # 28 addi immediate
-22 # 29
+22 # 29 decm address
 1E # 30 incmem address
-2A # 31
+2A # 31 subt address
 0E # 32 add address
 04 # 33 dec
 05 # 34 inc

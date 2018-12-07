@@ -418,3 +418,40 @@
 92: ALU_PC, PCWrite, Add, PC_ALUA, One_ALUB,
 	DispatchROM2;
 #######################################################
+#93 AddDisp Immediate, Address16 : : OPCODE 16
+# AC <-- AC + signext(imm10)
+93: ACWrite, ALU_AC, Add, AC_ALUA, Imm10_ALUB,
+	Seq;
+###########################	
+#  MAR <-- M[PC]
+#  PC <-- PC + 2
+#	DispatchROM2
+94: PC_MemAddress, MemRead, Mem_MAR, MARWrite,
+    PC_ALUA, Two_ALUB, Add, ALU_PC, PCWrite,
+    Seq;
+	 
+# MDR <-- M[MAR]
+95: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+
+# MAR <-- MDR - 1
+96: Subt, MARWrite, ALU_MAR, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# MAR <-- MAR + 1
+97: ALU_MAR, MARWrite, Add, MAR_ALUA, One_ALUB,
+	Seq;
+
+# MDR <-- M[MAR]
+98: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	DispatchROM2;
+#####
+# AC <-- AC + MDR
+99: ALU_AC, ACWrite, AC_ALUA, MDR_ALUB,
+	Fetch;
+#######################################################
+#100 JumpDisp Immediate, Address16 : : OPCODE 1
+#PC <-- MDR + signext(imm10)
+100: PCWrite, ALU_PC, Add, MDR_ALUA, Imm10_ALUB,
+	 Fetch;
+#######################################################

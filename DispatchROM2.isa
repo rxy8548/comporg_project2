@@ -1,5 +1,5 @@
 00 # 0
-00 # 1
+64 # 1 jumpdisp immediate address
 52 # 2 retsub address
 00 # 3
 00 # 4
@@ -14,13 +14,13 @@
 00 # 13
 00 # 14
 00 # 15
-00 # 16
+63 # 16 adddisp immediate address
 42 # 17 addndec address
 44 # 18 addninc address
 00 # 19
 00 # 20
 2F # 21 loadil immediate
-31 # 22
+31 # 22 addl
 00 # 23
 00 # 24
 00 # 25
