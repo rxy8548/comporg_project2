@@ -1,6 +1,6 @@
 03 # 0 clear
 00 # 1
-00 # 2
+56 # 2 retusub address
 00 # 3
 26 # 4 jumpn address
 0C # 5 jump address
@@ -8,23 +8,23 @@
 1D # 7 BrZ Offset
 1B # 8 BrNeg Address
 00 # 9
-00 # 10
+4B # 10 pop address
 0B # 11 storess
-00 # 12
+46 # 12 storen address
 0A # 13 storeds
 09 # 14 storecs
-00 # 15
+2D # 15 store address
 00 # 16
-00 # 17
-00 # 18
+3A # 17 addndec address
+3A # 18 addninc address
 08 # 19 loadss
-00 # 20
-00 # 21
-00 # 22
+34 # 20 addn address
+02 # 21 loadil immediate
+33 # 22 addl address16
 11 # 23 adddec address
 16 # 24 addinc address
 07 # 25 loadds
-00 # 26
+02 # 26 addil immediate
 06 # 27 loadcs
 0D # 28 addi immediate
 22 # 29

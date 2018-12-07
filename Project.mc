@@ -212,3 +212,209 @@
 # AC <-- AC - MDR
 44: ALU_AC, ACWrite, AC_ALUA, MDR_ALUB, Subt,
 	Fetch;
+#######################################################
+#45 Store Address : : OPCODE 15
+# MAR <-- DS + Address10 
+45: ALU_MAR, Add, DS_ALUA, Address10_ALUB, MARWrite,
+	Seq;
+
+# M[MAR] <-- AC
+46: MemWrite, AC_Mem, MAR_MemAddress,
+	Fetch;
+#######################################################
+#47 LoadIL Immediate : : OPCODE 21
+# AC <-- 0  
+47: Zero_AC, ACWrite,
+	Seq;
+##########################
+#48 AddIL Immediate : : 26
+# AC <-- AC + MDR (((Imm16)))
+48: ALU_AC, ACWrite, AC_ALUA, MDR_ALUB,
+	Fetch;
+#######################################################
+#49 AddL Address16 : : OPCODE 22
+# MDR <-- M[MAR]
+49: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+
+# AC <-- AC + MDR
+50: ALU_AC, ACWrite, AC_ALUA, MDR_ALUB,
+	Fetch;
+#######################################################
+#51 Loads DispatchROM2 for long instructions
+#  MAR <-- M[PC]
+#  PC <-- PC + 2
+#	DispatchROM2
+51:  PC_MemAddress, MemRead, Mem_MAR, MARWrite,
+     PC_ALUA, Two_ALUB, Add, ALU_PC, PCWrite,
+     DispatchROM2;
+#######################################################
+#52 AddN Address : :OPCODE 20
+# MAR <-- DS + Address10 
+52: ALU_MAR, Add, DS_ALUA, Address10_ALUB, MARWrite,
+	Seq;
+
+# MDR <-- M[MAR]
+53: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+	
+# MAR <-- MDR - 1
+54: Subt, MARWrite, ALU_MAR, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# MAR <-- MAR + 1
+55: ALU_MAR, MARWrite, Add, MAR_ALUA, One_ALUB,
+	Seq;
+
+# MDR <-- M[MAR]
+56: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+	
+# AC <-- AC + MDR
+57: ALU_AC, ACWrite, AC_ALUA, MDR_ALUB,
+	Fetch;
+#######################################################
+#58 AddNDec/Inc Address : : OPCODE 17/18
+# MAR <-- DS + Address10 
+58: ALU_MAR, Add, DS_ALUA, Address10_ALUB, MARWrite,
+	Seq;
+
+# MDR <-- M[MAR]
+59: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+	
+# MAR <-- MDR - 1
+60: Subt, MARWrite, ALU_MAR, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# MAR <-- MAR + 1
+61: ALU_MAR, MARWrite, Add, MAR_ALUA, One_ALUB,
+	Seq;
+
+# MDR <-- M[MAR]
+62: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+	
+# AC <-- AC + MDR
+63: ALU_AC, ACWrite, AC_ALUA, MDR_ALUB,
+	Seq;
+
+# MAR <-- DS + Address10 
+64: ALU_MAR, Add, DS_ALUA, Address10_ALUB, MARWrite,
+	Seq;
+
+# MDR <-- M[MAR]
+65: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	DispatchROM2;
+##############################	
+# MDR <-- MDR - 2
+66: ALU_MDR, Subt, MDR_ALUA, Two_ALUB, MDRWrite,
+	Seq;
+
+# M[MAR] <-- MDR
+67: MAR_MemAddress, MemWrite, MDR_Mem,
+	Fetch;
+##############################
+# MDR <-- MDR + 2
+68: ALU_MDR, Add, MDR_ALUA, Two_ALUB, MDRWrite,
+	Seq;
+
+# M[MAR] <-- MDR
+69: MAR_MemAddress, MemWrite, MDR_Mem,
+	Fetch;
+#######################################################
+#70 StoreN Address : : OPCODE 12
+# MAR <-- DS + Address10 
+70: ALU_MAR, Add, DS_ALUA, Address10_ALUB, MARWrite,
+	Seq;
+	
+# MDR <-- M[MAR]
+71: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+	
+# MAR <-- MDR - 1
+72: Subt, MARWrite, ALU_MAR, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# MAR <-- MAR + 1
+73: ALU_MAR, MARWrite, Add, MAR_ALUA, One_ALUB,
+	Seq;
+	
+# M[MAR] <-- AC
+74: MemWrite, AC_Mem, MAR_MemAddress,
+	Fetch;
+#######################################################
+#75 Pop Address : : OPCODE 10
+# MAR <-- SS + Address10 
+75: ALU_MAR, Add, SS_ALUA, Address10_ALUB, MARWrite,
+	Seq;
+
+# MDR <-- M[MAR]
+76: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+	
+# MAR <-- MDR - 1
+77: Subt, MARWrite, ALU_MAR, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# MAR <-- MAR + 1
+78: ALU_MAR, MARWrite, Add, MAR_ALUA, One_ALUB,
+	Seq;
+
+# MDR <-- M[MAR]
+79: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+
+# AC <-- 0  
+80: Zero_AC, ACWrite,
+	Seq;
+	
+# AC <-- AC + MDR
+81: ALU_AC, ACWrite, AC_ALUA, MDR_ALUB,
+	Seq;
+############################## M[SS + Address10] <-- M[SS + Address10] + 2
+# MAR <-- SS + Address10 
+82: ALU_MAR, Add, SS_ALUA, Address10_ALUB, MARWrite,
+	Seq;
+
+# MDR <-- M[MAR]
+83: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+	
+# MDR <-- MDR + 2
+84: ALU_MDR, Add, MDR_ALUA, Two_ALUB, MDRWrite,
+	Seq;
+
+# M[MAR] <-- MDR
+85: MAR_MemAddress, MemWrite, MDR_Mem,
+	Fetch;
+#######################################################
+#86 RetSub Address : : OPCODE 2
+# MAR <-- SS + Address10 
+86: ALU_MAR, Add, SS_ALUA, Address10_ALUB, MARWrite,
+	Seq;
+
+# MDR <-- M[MAR]
+87: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+	
+# MAR <-- MDR - 1
+88: Subt, MARWrite, ALU_MAR, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# MAR <-- MAR + 1
+89: ALU_MAR, MARWrite, Add, MAR_ALUA, One_ALUB,
+	Seq;
+
+# MDR <-- M[MAR]
+90: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+
+# PC <-- MDR - 1  
+91: Subt, PCWrite, ALU_PC, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# PC <-- PC + 1
+92: ALU_PC, PCWrite, Add, PC_ALUA, One_ALUB,
+	DispatchROM2;
+#######################################################
