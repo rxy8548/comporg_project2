@@ -455,3 +455,74 @@
 100: PCWrite, ALU_PC, Add, MDR_ALUA, Imm10_ALUB,
 	 Fetch;
 #######################################################
+#101 Push Address : : OPCODE 9
+# MAR <-- SS + Address10 
+101: ALU_MAR, Add, SS_ALUA, Address10_ALUB, MARWrite,
+	Seq;
+
+# MDR <-- M[MAR]
+102: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+
+# MDR <-- MDR - 2
+103: Subt, MDR_ALUA, Two_ALUB, MDRWrite, ALU_MDR,
+	Seq;
+
+# M[MAR] <-- MDR
+104: MemWrite, MDR_Mem, 
+	Seq;
+
+# MAR <-- MDR - 1
+105: Subt, MARWrite, ALU_MAR, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# MAR <-- MAR + 1
+106: ALU_MAR, MARWrite, Add, MAR_ALUA, One_ALUB,
+	Seq;
+
+# M[MAR] <-- AC
+107: MemWrite, AC_Mem,
+	Fetch;
+#######################################################
+#108 JumpSub Address, Address16 : : OPCODE 3
+# MAR <-- SS + Address10 
+108: ALU_MAR, Add, SS_ALUA, Address10_ALUB, MARWrite,
+	Seq;
+
+# MDR <-- M[MAR]
+109: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+	Seq;
+
+# MDR <-- MDR - 2
+110: Subt, MDR_ALUA, Two_ALUB, MDRWrite, ALU_MDR,
+	Seq;
+
+# M[MAR] <-- MDR
+111: MemWrite, MDR_Mem, 
+	Seq;
+
+# MAR <-- MDR - 1
+112: Subt, MARWrite, ALU_MAR, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# MAR <-- MAR + 1
+113: ALU_MAR, MARWrite, Add, MAR_ALUA, One_ALUB,
+	Seq;
+
+#  MDR <-- M[PC]
+#  PC <-- PC + 2
+114: PC_MemAddress, MemRead, Mem_MDR, MDRWrite,
+	 PC_ALUA, Two_ALUB, Add, ALU_PC, PCWrite,
+    Seq;
+	 
+# M[MAR} <-- PC
+115: PC_Mem, MemWrite, MAR_MemAddress,
+	Seq;
+
+# PC <-- MDR - 1  
+116: Subt, PCWrite, ALU_PC, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# PC <-- PC + 1
+117: ALU_PC, PCWrite, Add, PC_ALUA, One_ALUB,
+	Fetch;

@@ -1,13 +1,13 @@
 03 # 0 clear
 5E # 1 jumpdisp immediate address16
 56 # 2 retusub address
-00 # 3
+6C # 3 jumpsub address address16
 26 # 4 jumpn address
 0C # 5 jump address
 1C # 6 brpos offsset
 1D # 7 BrZ Offset
 1B # 8 BrNeg Address
-00 # 9
+65 # 9 push address
 4B # 10 pop address
 0B # 11 storess
 46 # 12 storen address
