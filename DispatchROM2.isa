@@ -1,5 +1,5 @@
 00 # 0
-64 # 1 jumpdisp immediate address
+76 # 1 jumpdisp immediate address 
 52 # 2 retsub address
 00 # 3
 00 # 4

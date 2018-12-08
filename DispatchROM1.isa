@@ -1,5 +1,5 @@
 03 # 0 clear
-5E # 1 jumpdisp immediate address16
+5D # 1 jumpdisp immediate address16 
 56 # 2 retusub address
 6C # 3 jumpsub address address16
 26 # 4 jumpn address

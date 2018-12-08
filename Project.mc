@@ -419,27 +419,29 @@
 	DispatchROM2;
 #######################################################
 #93 AddDisp Immediate, Address16 : : OPCODE 16
-# AC <-- AC + signext(imm10)
-93: ACWrite, ALU_AC, Add, AC_ALUA, Imm10_ALUB,
-	Seq;
+
 ###########################	
 #  MAR <-- M[PC]
 #  PC <-- PC + 2
 #	DispatchROM2
-94: PC_MemAddress, MemRead, Mem_MAR, MARWrite,
+93: PC_MemAddress, MemRead, Mem_MAR, MARWrite,
     PC_ALUA, Two_ALUB, Add, ALU_PC, PCWrite,
     Seq;
 	 
 # MDR <-- M[MAR]
-95: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
+94: MAR_MemAddress, MemRead, MDRWrite, Mem_MDR,
 	Seq;
 
-# MAR <-- MDR - 1
-96: Subt, MARWrite, ALU_MAR, MDR_ALUA, One_ALUB,
+# MAR <-- MDR + imm10
+95: Add, MARWrite, ALU_MAR, MDR_ALUA, Imm10_ALUB,
+	Seq;
+
+# MAR <-- MDR - 1 NOT
+96: 
 	Seq;
 	
-# MAR <-- MAR + 1
-97: ALU_MAR, MARWrite, Add, MAR_ALUA, One_ALUB,
+# MAR <-- MAR + 1 NOT
+97: 
 	Seq;
 
 # MDR <-- M[MAR]
@@ -451,10 +453,10 @@
 	Fetch;
 #######################################################
 #100 JumpDisp Immediate, Address16 : : OPCODE 1
-#PC <-- MDR + signext(imm10)
-100: PCWrite, ALU_PC, Add, MDR_ALUA, Imm10_ALUB,
+#PC <-- MDR + 1 NOT
+100: 
 	 Fetch;
-#######################################################
+####################################################### 
 #101 Push Address : : OPCODE 9
 # MAR <-- SS + Address10 
 101: ALU_MAR, Add, SS_ALUA, Address10_ALUB, MARWrite,
@@ -469,7 +471,7 @@
 	Seq;
 
 # M[MAR] <-- MDR
-104: MemWrite, MDR_Mem, 
+104: MemWrite, MDR_Mem, MAR_MemAddress,
 	Seq;
 
 # MAR <-- MDR - 1
@@ -481,7 +483,7 @@
 	Seq;
 
 # M[MAR] <-- AC
-107: MemWrite, AC_Mem,
+107: MemWrite, AC_Mem, MAR_MemAddress,
 	Fetch;
 #######################################################
 #108 JumpSub Address, Address16 : : OPCODE 3
@@ -498,7 +500,7 @@
 	Seq;
 
 # M[MAR] <-- MDR
-111: MemWrite, MDR_Mem, 
+111: MemWrite, MDR_Mem, MAR_MemAddress,
 	Seq;
 
 # MAR <-- MDR - 1
@@ -526,3 +528,13 @@
 # PC <-- PC + 1
 117: ALU_PC, PCWrite, Add, PC_ALUA, One_ALUB,
 	Fetch;
+#######################################################
+#118 JumpDisp Immediate, Address16 : : OPCODE 1
+# PC <-- MDR - 1  
+118: Subt, PCWrite, ALU_PC, MDR_ALUA, One_ALUB,
+	Seq;
+	
+# PC <-- PC + 1
+119: ALU_PC, PCWrite, Add, PC_ALUA, One_ALUB,
+	Fetch;
+#######################################################
